@@ -19,25 +19,25 @@ function getWorkingHours(empCheck) {
     return empHrs;
 }
 
-function calcDailyWage(empHrs) {
-    return empHrs * WAGE_PER_HOUR;
-}
+// function calcDailyWage(empHrs) {
+//     return empHrs * WAGE_PER_HOUR;
+// }
 
-const NUM_OF_WORKING_DAYS = 20
-const MAX_HOURS_IN_MONTH = 100;
-let totalEmpHrs = 0;
-let totalWorkingDays = 0;
-let empDailyWageArr = new Array();
-while(totalEmpHrs <= MAX_HOURS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
-    totalWorkingDays++;
-    let empCheck = Math.floor(Math.random() * 10) % 3;
-    let empHrs = getWorkingHours(empCheck);
-    totalEmpHrs += empHrs;
-    empDailyWageArr.push(calcDailyWage(empHrs))
-}
+// const NUM_OF_WORKING_DAYS = 20
+// const MAX_HOURS_IN_MONTH = 100;
+// let totalEmpHrs = 0;
+// let totalWorkingDays = 0;
+// let empDailyWageArr = new Array();
+// while(totalEmpHrs <= MAX_HOURS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
+//     totalWorkingDays++;
+//     let empCheck = Math.floor(Math.random() * 10) % 3;
+//     let empHrs = getWorkingHours(empCheck);
+//     totalEmpHrs += empHrs;
+//     empDailyWageArr.push(calcDailyWage(empHrs))
+// }
 
-let empWage = calcDailyWage(totalEmpHrs)
-console.log("Total Days: "+totalWorkingDays+" Total Hrs: "+ totalEmpHrs +" Emp wage: "+ empWage);
+// let empWage = calcDailyWage(totalEmpHrs)
+// console.log("Total Days: "+totalWorkingDays+" Total Hrs: "+ totalEmpHrs +" Emp wage: "+ empWage);
 
 //UC-7A calculate total wage using array forEach traversal or reduce method
 let totalEmpWage = 0;
@@ -101,3 +101,31 @@ function totalDayWorked(numOfDays, dailyWage) {
     return numOfDays;
 }
 console.log("Number of Days Emp Worked: "+empDailyWageArr.reduce(totalDayWorked,0));
+
+// //UC-8 Map
+ function calcDailyWageUseMap(empHrs) {
+     return empHrs * WAGE_PER_HOUR;
+ }
+
+const NUM_OF_WORKING_DAYS = 20;
+const MAX_HOURS_IN_MONTH = 160;
+let totalEmpHrs = 0;
+let totalWorkingDays = 0;
+let empDailyWageArr = new Array();
+let empDailyWageMap = new Map();
+while(totalEmpHrs <= MAX_HOURS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
+    totalWorkingDays++;
+    let empCheck = Math.floor(Math.random() * 10) % 3;
+    let empHrs = getWorkingHours(empCheck);
+    totalEmpHrs += empHrs;
+    empDailyWageArr.push(calcDailyWageUseMap(empHrs));
+    empDailyWageMap.set(totalWorkingDays, calcDailyWageUseMap(empHrs))
+}
+
+console.log(empDailyWageMap);
+function totalWages(totalWage, dailyWage) {
+    return totalWage + dailyWage;
+}
+
+console.log("Employee wage Map totalHrs: "+ Array.from(empDailyWageMap.values()).reduce(totalWages, 0));
+
